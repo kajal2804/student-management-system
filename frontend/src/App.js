@@ -106,14 +106,21 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
       {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Student Management System
-          </h1>
-          <p className="text-gray-600 mt-2">Manage students and their academic records</p>
+      <header className="bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center gap-3">
+            <div className="bg-white bg-opacity-20 p-3 rounded-lg">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C6.5 6.253 2 10.998 2 17s4.5 10.747 10 10.747c5.5 0 10-4.998 10-10.747 0-6.002-4.5-10.747-10-10.747z" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-white">Student Management System</h1>
+              <p className="text-blue-100 mt-1">Manage students and their academic records</p>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -135,9 +142,12 @@ function App() {
                   setEditingStudent(null);
                   setView('form');
                 }}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+                className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition transform hover:scale-105 shadow-lg flex items-center gap-2"
               >
-                + Add New Student
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Add New Student
               </button>
             </div>
 
@@ -189,9 +199,29 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-600">
-          <p>Student Management System © 2024</p>
+      <footer className="bg-gradient-to-r from-gray-800 to-gray-900 border-t mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h4 className="text-white font-bold text-lg mb-2">Student Management</h4>
+              <p className="text-gray-400 text-sm">Efficient student and academic record management system.</p>
+            </div>
+            <div>
+              <h4 className="text-white font-bold text-lg mb-2">Features</h4>
+              <ul className="text-gray-400 text-sm space-y-1">
+                <li>• Student CRUD Operations</li>
+                <li>• Mark Management</li>
+                <li>• Pagination Support</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-bold text-lg mb-2">Technology</h4>
+              <p className="text-gray-400 text-sm">React • Node.js • PostgreSQL</p>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500">
+            <p>© 2024 Student Management System. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>

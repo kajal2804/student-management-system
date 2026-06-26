@@ -87,35 +87,49 @@ const StudentDetail = ({ student, onBack, isLoading = false, onStudentUpdate }) 
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
       {/* Student Information */}
-      <div className="mb-6">
+      <div className="mb-8">
         <button
           onClick={onBack}
-          className="text-blue-600 hover:text-blue-800 mb-4 font-medium"
+          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-2 rounded-lg mb-4 font-semibold flex items-center gap-1 transition"
         >
-          ← Back
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
         </button>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">{student.name}</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <p className="text-sm text-gray-600">Email</p>
-            <p className="text-gray-800 font-medium">{student.email}</p>
+        <div className="flex items-start gap-4 mb-6">
+          <div className="bg-gradient-to-br from-blue-400 to-blue-600 p-4 rounded-xl text-white">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
           </div>
           <div>
-            <p className="text-sm text-gray-600">Phone</p>
-            <p className="text-gray-800 font-medium">{student.phone || '-'}</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">{student.name}</h2>
+            <p className="text-gray-500">Student Profile</p>
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Enrollment Date</p>
-            <p className="text-gray-800 font-medium">
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
+            <p className="text-sm text-blue-600 font-semibold uppercase tracking-wide">Email</p>
+            <p className="text-gray-800 font-medium mt-2">{student.email}</p>
+          </div>
+          <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
+            <p className="text-sm text-green-600 font-semibold uppercase tracking-wide">Phone</p>
+            <p className="text-gray-800 font-medium mt-2">{student.phone || <span className="text-gray-400">-</span>}</p>
+          </div>
+          <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
+            <p className="text-sm text-purple-600 font-semibold uppercase tracking-wide">Enrollment</p>
+            <p className="text-gray-800 font-medium mt-2">
               {new Date(student.enrollment_date).toLocaleDateString()}
             </p>
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Member Since</p>
-            <p className="text-gray-800 font-medium">
+          <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
+            <p className="text-sm text-orange-600 font-semibold uppercase tracking-wide">Member Since</p>
+            <p className="text-gray-800 font-medium mt-2">
               {new Date(student.created_at).toLocaleDateString()}
             </p>
           </div>
@@ -123,14 +137,39 @@ const StudentDetail = ({ student, onBack, isLoading = false, onStudentUpdate }) 
       </div>
 
       {/* Marks Section */}
-      <div className="border-t pt-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-gray-800">Academic Records</h3>
+      <div className="border-t-2 border-gray-200 pt-8">
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-3">
+            <div className="bg-green-100 p-3 rounded-lg">
+              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-800">Academic Records</h3>
+          </div>
           <button
             onClick={() => setShowMarkForm(!showMarkForm)}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
+            className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
+              showMarkForm
+                ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                : 'bg-green-100 text-green-700 hover:bg-green-200'
+            }`}
           >
-            {showMarkForm ? 'Cancel' : '+ Add Mark'}
+            {showMarkForm ? (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                Cancel
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Add Mark
+              </>
+            )}
           </button>
         </div>
 
@@ -214,42 +253,43 @@ const StudentDetail = ({ student, onBack, isLoading = false, onStudentUpdate }) 
 
         {student.marks && student.marks.length > 0 ? (
           <>
-            <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-gray-600">Average Score</p>
-              <p className="text-2xl font-bold text-blue-600">
-                {calculateAverage(student.marks)}/100
+            <div className="mb-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
+              <p className="text-blue-100 text-sm font-semibold uppercase tracking-wide">Overall Performance</p>
+              <p className="text-4xl font-bold mt-3">
+                {calculateAverage(student.marks)}<span className="text-2xl text-blue-100 ml-1">/100</span>
               </p>
+              <p className="text-blue-100 mt-2 text-sm">Average Score</p>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-100 border-b">
+                <thead className="bg-gradient-to-r from-blue-600 to-blue-700 border-b-2 border-blue-800">
                   <tr>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
                       Subject
                     </th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
                       Score
                     </th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                    <th className="px-4 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
                       Exam Date
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {student.marks.map((mark) => (
-                    <tr key={mark.id} className="border-b hover:bg-gray-50">
-                      <td className="px-4 py-4 text-sm text-gray-900">
+                    <tr key={mark.id} className="border-b border-gray-100 hover:bg-blue-50 transition">
+                      <td className="px-4 py-4 text-sm font-semibold text-gray-900">
                         {mark.subject}
                       </td>
-                      <td className="px-4 py-4 text-sm font-medium">
+                      <td className="px-4 py-4 text-sm font-bold">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          className={`px-4 py-2 rounded-full text-sm font-bold inline-block ${
                             mark.score >= 80
-                              ? 'bg-green-100 text-green-800'
+                              ? 'bg-green-100 text-green-800 shadow-sm'
                               : mark.score >= 60
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-red-100 text-red-800'
+                              ? 'bg-yellow-100 text-yellow-800 shadow-sm'
+                              : 'bg-red-100 text-red-800 shadow-sm'
                           }`}
                         >
                           {mark.score}
@@ -265,8 +305,12 @@ const StudentDetail = ({ student, onBack, isLoading = false, onStudentUpdate }) 
             </div>
           </>
         ) : (
-          <div className="bg-gray-50 p-6 rounded-lg text-center">
-            <p className="text-gray-500">No marks recorded yet</p>
+          <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-12 rounded-xl text-center border-2 border-dashed border-gray-300">
+            <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p className="text-gray-500 text-lg font-semibold">No marks recorded yet</p>
+            <p className="text-gray-400 mt-2">Click "Add Mark" to record the first exam</p>
           </div>
         )}
       </div>
