@@ -183,6 +183,7 @@ function App() {
             student={selectedStudent}
             onBack={() => setView('list')}
             isLoading={isLoading}
+            onStudentUpdate={fetchStudentDetail}
           />
         )}
       </main>
