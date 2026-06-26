@@ -1,0 +1,203 @@
+{
+  "info": {
+    "name": "Student Management System API",
+    "description": "RESTful API for managing students and marks",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students?page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "students"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Retrieve all students with pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "students", "1"]
+            },
+            "description": "Get a specific student with all their marks"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"9876543210\",\n  \"enrollment_date\": \"2024-06-01\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "students"]
+            },
+            "description": "Create a new student"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Updated\",\n  \"email\": \"john.updated@example.com\",\n  \"phone\": \"9876543210\",\n  \"enrollment_date\": \"2024-06-01\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "students", "1"]
+            },
+            "description": "Update an existing student"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "students", "1"]
+            },
+            "description": "Delete a student (marks are automatically deleted due to CASCADE)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Marks",
+      "item": [
+        {
+          "name": "Add Mark for Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Mathematics\",\n  \"score\": 92.5,\n  \"exam_date\": \"2024-06-15\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students/1/marks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "students", "1", "marks"]
+            },
+            "description": "Add a mark for a student in a specific subject"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Mark",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Mathematics\",\n  \"score\": 95.0,\n  \"exam_date\": \"2024-06-15\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/marks/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "marks", "1"]
+            },
+            "description": "Update an existing mark"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Mark",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/marks/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "marks", "1"]
+            },
+            "description": "Delete a mark record"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "health"]
+        },
+        "description": "Check if the API is running"
+      },
+      "response": []
+    }
+  ]
+}
