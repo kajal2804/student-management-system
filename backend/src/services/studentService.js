@@ -71,12 +71,14 @@ class StudentService {
     }
 
     // Insert student
-    const [id] = await db('students').insert({
+    const result = await db('students').insert({
       name: data.name.trim(),
       email: data.email.toLowerCase().trim(),
       phone: data.phone || null,
       enrollment_date: data.enrollment_date || new Date().toISOString().split('T')[0],
-    });
+    }).returning('id');
+
+    const id = result[0]?.id || result[0];
 
     return this.getStudentById(id);
   }
@@ -163,12 +165,14 @@ class StudentService {
     }
 
     // Insert mark
-    const [markId] = await db('marks').insert({
+    const result = await db('marks').insert({
       student_id: studentId,
       subject: markData.subject.trim(),
       score: parseFloat(markData.score),
       exam_date: markData.exam_date || new Date().toISOString().split('T')[0],
-    });
+    }).returning('id');
+
+    const markId = result[0]?.id || result[0];
 
     return db('marks').where('id', markId).first();
   }

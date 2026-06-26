@@ -32,7 +32,10 @@ function App() {
       setPagination(response.data.pagination);
       setCurrentPage(page);
     } catch (error) {
-      showAlert('error', 'Failed to fetch students');
+      const message = String(
+        error.response?.data?.message || error.message || 'Failed to fetch students'
+      );
+      showAlert('error', message);
       console.error('Error fetching students:', error);
     } finally {
       setIsLoading(false);
@@ -47,7 +50,10 @@ function App() {
       setSelectedStudent(response.data.data);
       setView('detail');
     } catch (error) {
-      showAlert('error', 'Failed to fetch student details');
+      const message = String(
+        error.response?.data?.message || error.message || 'Failed to fetch student details'
+      );
+      showAlert('error', message);
       console.error('Error fetching student:', error);
     } finally {
       setIsLoading(false);
@@ -58,6 +64,7 @@ function App() {
   const handleSaveStudent = async (data) => {
     try {
       setIsLoading(true);
+      setEditingStudent(null);
 
       if (editingStudent) {
         await studentApi.updateStudent(editingStudent.id, data);
@@ -67,14 +74,22 @@ function App() {
         showAlert('success', 'Student created successfully');
       }
 
-      setEditingStudent(null);
-      setView('list');
-      fetchStudents(1);
+      // Delay state changes to ensure alert renders first
+      setTimeout(() => {
+        setView('list');
+        fetchStudents(1);
+      }, 500);
     } catch (error) {
-      const message =
-        error.response?.data?.message || 'Failed to save student';
-      showAlert('error', message);
-      console.error('Error saving student:', error);
+      console.error('Full error object:', error);
+      let errorMessage = 'Failed to save student';
+
+      if (error?.response?.data?.message) {
+        errorMessage = String(error.response.data.message);
+      } else if (error?.message) {
+        errorMessage = String(error.message);
+      }
+
+      showAlert('error', errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +103,10 @@ function App() {
       showAlert('success', 'Student deleted successfully');
       fetchStudents(1);
     } catch (error) {
-      showAlert('error', 'Failed to delete student');
+      const message = String(
+        error.response?.data?.message || error.message || 'Failed to delete student'
+      );
+      showAlert('error', message);
       console.error('Error deleting student:', error);
     } finally {
       setIsLoading(false);
@@ -97,7 +115,9 @@ function App() {
 
   // Show alert message
   const showAlert = (type, message) => {
-    setAlert({ type, message });
+    // Ensure message is always a string
+    const safeMessage = message ? String(message) : '';
+    setAlert({ type, message: safeMessage });
   };
 
   // Initialize

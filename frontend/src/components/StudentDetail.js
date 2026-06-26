@@ -73,14 +73,18 @@ const StudentDetail = ({ student, onBack, isLoading = false, onStudentUpdate }) 
 
     try {
       setIsSubmitting(true);
+      setMarkErrors({});
       await studentApi.addMark(student.id, markForm);
       setMarkForm({ subject: '', score: '', exam_date: new Date().toISOString().split('T')[0] });
       setShowMarkForm(false);
+      setMarkErrors({});
       if (onStudentUpdate) onStudentUpdate(student.id);
     } catch (error) {
-      setMarkErrors({
-        submit: error.response?.data?.message || 'Failed to add mark',
-      });
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to add mark';
+      setMarkErrors((prev) => ({
+        ...prev,
+        submit: typeof errorMessage === 'string' ? errorMessage : 'An error occurred',
+      }));
     } finally {
       setIsSubmitting(false);
     }
@@ -237,7 +241,12 @@ const StudentDetail = ({ student, onBack, isLoading = false, onStudentUpdate }) 
               </div>
 
               {markErrors.submit && (
-                <p className="text-red-500 text-sm mb-4">{markErrors.submit}</p>
+                <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-lg flex items-center gap-2">
+                  <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  <p className="text-red-700 text-sm font-medium">{String(markErrors.submit)}</p>
+                </div>
               )}
 
               <button

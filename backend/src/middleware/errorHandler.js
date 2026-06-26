@@ -6,6 +6,7 @@ const { AppError } = require('../utils/errors');
 
 function errorHandler(err, req, res, next) {
   console.error('Error:', err);
+  console.error('Error Stack:', err.stack);
 
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
@@ -32,10 +33,14 @@ function errorHandler(err, req, res, next) {
     });
   }
 
-  // Generic error
+  // Generic error with more details for debugging
+  const message = err.message || 'Internal server error';
+  console.error('Generic error message:', message);
+
   res.status(err.statusCode || 500).json({
     success: false,
-    message: err.message || 'Internal server error',
+    message: String(message),
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined,
   });
 }
 

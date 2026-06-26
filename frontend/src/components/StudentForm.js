@@ -64,8 +64,19 @@ const StudentForm = ({ student = null, onSubmit, onCancel, isLoading = false }) 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      onSubmit(formData);
+    try {
+      if (validateForm()) {
+        // Ensure all form data is clean
+        const cleanData = {
+          name: String(formData.name).trim(),
+          email: String(formData.email).trim().toLowerCase(),
+          phone: formData.phone ? String(formData.phone).trim() : '',
+          enrollment_date: String(formData.enrollment_date).trim(),
+        };
+        onSubmit(cleanData);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
     }
   };
 

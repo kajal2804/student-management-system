@@ -5,14 +5,17 @@
 import React, { useEffect } from 'react';
 
 const Alert = ({ type, message, onClose, duration = 5000 }) => {
+  // Ensure message is always a string
+  const safeMessage = message ? String(message) : '';
+
   useEffect(() => {
-    if (message) {
+    if (safeMessage) {
       const timer = setTimeout(onClose, duration);
       return () => clearTimeout(timer);
     }
-  }, [message, duration, onClose]);
+  }, [safeMessage, duration, onClose]);
 
-  if (!message) return null;
+  if (!safeMessage) return null;
 
   const isError = type === 'error';
   const bgColor = isError ? 'bg-gradient-to-r from-red-50 to-red-100' : 'bg-gradient-to-r from-green-50 to-green-100';
@@ -36,7 +39,7 @@ const Alert = ({ type, message, onClose, duration = 5000 }) => {
         {Icon}
       </div>
       <div className="flex-1">
-        <p className="font-semibold text-sm">{message}</p>
+        <p className="font-semibold text-sm">{safeMessage}</p>
       </div>
       <button
         onClick={onClose}
